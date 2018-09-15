@@ -58,9 +58,7 @@ private:
 public:
 	ThreadPool (const size_t N) {
 		for (size_t i = 0; i < N; ++i) {
-			pool.emplace_back(std::thread([this] {
-				this->thread();
-			}));
+			pool.emplace_back([this] { this->thread(); });
 		}
 	}
 
