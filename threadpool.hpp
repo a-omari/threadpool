@@ -80,8 +80,16 @@ public:
 		}
 	}
 
-	void clear () { jobs.clear(); }
-	void reserve (const size_t N) { jobs.reserve(N); }
+	void clear () {
+		auto guard = std::lock_guard(mutex);
+		jobs.clear();
+	}
+
+	void reserve (const size_t N) {
+		auto guard = std::lock_guard(mutex);
+		jobs.reserve(N);
+	}
+
 	void push (const F f) {
 		assert(not joined);
 
